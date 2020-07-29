@@ -1,35 +1,35 @@
-## This function will create the vector the first time, put the list of functions
-## into x kist and 'publish'x outside of the immediate environment
-## You can use $set afterwards to change the original data set
+## This function will create the list vector the first time -  a list of named of functions.
+## into x list and store x outside of the immediate environment
+## You can use x$set afterwards to change the original data set
 ## Note you have to run it the first time and place the result into 'x'
 
 
-
-makeCacheMatrix <- function(current = matrix()) {
-    inverse_matrix <- NULL
-    set <- function(new) {
-      current <<- new
-      inverse_matrix <<- NULL
+makeCacheMatrix <- function(x = matrix()) {
+    m <- NULL
+    set <- function(y) {
+      x <<- y
+      m <<- NULL
     }
-    get <- function() current
-    setinverse <- function(inverted) inverse_matrix <<- inverted
-    getinverse <- function() inverse_matrix
+    get <- function() x
+    setinverse <- function(inverted) m <<- inverted
+    getinverse <- function() m
     list(set = set, get = get,
          setinverse = setinverse,
          getinverse = getinverse)
   }
 
   
-## We then use cachesolve to solve for the matrix passed to it, called x
+## We then use cachesolve to take a matrix, check if its inverse is cached - if it is cached then return 
+## that cache, otherwise calculate the cache, return it  
 
 cacheSolve <- function(x, ...) {
-  exists <- x$getinverse()
-  if(!is.null(exists)) {
+  m <- x$getinverse()
+  if(!is.null(m)) {
     message("getting cached data")
-    return(exists)
+    return(m)
   }
   data <- x$get()
-  inverted <- solve(data, ...)
-  x$setinverse(inverted)
-  inverted
+  m <- solve(data, ...)
+  x$setinverse(m)
+  m
 }
