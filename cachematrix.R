@@ -1,8 +1,7 @@
 ## This function will create the list vector the first time -  a list of named of functions.
-## into x list and store x outside of the immediate environment
-## You can use x$set afterwards to change the original data set
-## Note you have to run it the first time and place the result into 'x'
-
+## stored in a variable that you can use outside of the immediate environment
+## You can use $set afterwards to change the original matrix
+## Note you have to run it the first time just to get the list setup and available for later reference
 
 makeCacheMatrix <- function(x = matrix()) {
     m <- NULL
@@ -19,8 +18,8 @@ makeCacheMatrix <- function(x = matrix()) {
   }
 
   
-## We then use cachesolve to take a matrix, check if its inverse is cached - if it is cached then return 
-## that cache, otherwise calculate the cache, return it  
+## We then use cachesolve to take a matrix, check if its inverse is already cached - if it is cached then return 
+## that cache, otherwise calculate the new cache, place it into 'm' and print it  
 
 cacheSolve <- function(x, ...) {
   m <- x$getinverse()
